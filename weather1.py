@@ -6,15 +6,35 @@ from tkinter import messagebox
 
 
 # Функция проверки поля ввода координат. Разрешен тип float.
+# def validate_float(new_value):
+#     if new_value == "":
+#         return True  # разрешаем пустое поле
+#
+#     try:
+#         float(new_value)
+#         return True
+#     except ValueError:
+#         return False
 def validate_float(new_value):
+    # Разрешаем пустой ввод (удаление всех символов)
     if new_value == "":
-        return True  # разрешаем пустое поле
-
-    try:
-        float(new_value)
         return True
-    except ValueError:
+
+    # Проверяем, что строка начинается с + или - либо с цифры
+    first_char = new_value[0]
+    if first_char not in '+-' and not first_char.isdigit():
         return False
+
+    # Проверяем остальные символы — должны быть цифрами или точкой
+    for char in new_value[1:]:
+        if not (char.isdigit() or char == '.'):
+            return False
+
+    # Проверяем количество точек (не более одной)
+    if new_value.count('.') > 1:
+        return False
+
+    return True
 
 
 # Функция запроса погоды
@@ -144,7 +164,7 @@ def Kuzbas():
         anchor="w")
     Label(new_window, text="27. Яшкино: Широта-55.8736, Долгота-85.4265", font=("Times New Roman", 15)).pack(anchor="w")
     Label(new_window, text="28. Яя: Широта-56.206, Долгота-86.44", font=("Times New Roman", 15)).pack(anchor="w")
-    Label(new_window, text="Северный полюс: Широта-90, Долгота-0", font=("Times New Roman", 15)).pack(anchor="nw")
+    Label(new_window, text="Северный полюс(станция 'Восток'): Широта- -78.46442, Долгота-106.83733", font=("Times New Roman", 15)).pack(anchor="nw")
 
 
 # Парсим конфигурационный файл, извлекаем из него ключ API в переменную api_key.
@@ -176,6 +196,7 @@ app.geometry("550x800+80+200")
 
 # Команда проверки ввода. register(validate_float) - для окна app регистрирует функцию validate_float,
 # которая проверяет поле ввода на тип данных float. %P представляет новое значение, которое передается в функцию проверки.
+#vinput = (app.register(validate_float), "%P")\
 vinput = (app.register(validate_float), "%P")
 
 # Создаем кнопку для получения координат Кузбасса
@@ -185,16 +206,16 @@ b1.pack(pady=10)
 
 # Добавляем labels, buttons and text, публикуем виджеты.
 city_lat = StringVar()
-city_entry_lat = Entry(app, textvariable=city_lat, font=('Times New Roman', 12), validate='key',
-                       validatecommand=vinput)  # Ввод с проверкой
+city_entry_lat = Entry(app, textvariable=city_lat, font=('Times New Roman', 12), validate='key', validatecommand=vinput)  # Ввод с проверкой
+#city_entry_lat = Entry(app, textvariable=city_lat, font=('Times New Roman', 12))  # Ввод с проверкой
 city_entry_lat.pack()
 
 h = Label(app, text='(Введите широту)', font=('Times New Roman', 12), wraplength=500)
 h.pack()
 
 city_lon = StringVar()
-city_entry_lon = Entry(app, textvariable=city_lon, font=('Times New Roman', 12), validate='key',
-                       validatecommand=vinput)  # Ввод с проверкой
+city_entry_lon = Entry(app, textvariable=city_lon, font=('Times New Roman', 12), validate='key',validatecommand=vinput)  # Ввод с проверкой
+#city_entry_lon = Entry(app, textvariable=city_lon, font=('Times New Roman', 12))  # Ввод с проверкой
 city_entry_lon.pack()
 
 hc = Label(app, text='(Введите долготу)', font=('Times New Roman', 12), wraplength=500)
