@@ -21,7 +21,7 @@ def validate_float(new_value):
         if not (char.isdigit() or char == '.'):
             return False
 
-    # Проверяем количество точек (не более одной)
+    # Проверяем количество точек
     if new_value.count('.') > 1:
         return False
 
@@ -32,7 +32,7 @@ def validate_float(new_value):
 def getweather(params_api):
     # Получаем ответ сервиса по запросу
     response = requests.get(url, params=params_api, headers={'X-Yandex-API-Key': api_key})
-    # Проверяем статус ответа сервера (200 - ОК, 403 - Forbidden (Доступ запрещен), 404 - Page not found (страница ненайдена))
+    # Проверяем статус ответа сервера (200 - ОК, 403 - Forbidden (доступ запрещен), 404 - Page not found)
     if response.status_code == 200:
         # Преобразуем ответ в JSON-формат
         data = response.json()
@@ -70,15 +70,15 @@ def getweather(params_api):
         return None
 
 
-# Функция определения параметров запроса и вызов функции getweather, заполнения виджетов полученными значениями погоды,
+# функция определения параметров запроса и вызов функции getweather, заполнения виджетов полученными значениями погоды,
 # также заполняет виджеты предупреждений по условиям погоды.
 def search():
-    # Задаем параметры запроса
+    # задаем параметры запроса
     params = {'lat': city_entry_lat.get(),
               'lon': city_entry_lon.get(),
               'lang': 'ru_RU',
               }
-    # Делаем запрос к сервису с параметрами запроса
+    # делаем запрос к сервису с параметрами запроса
     weather = getweather(params_api=params)
 
     if weather:
@@ -102,7 +102,7 @@ def search():
                                                                                            city_entry_lon.get()))
 
 
-# Функция для открытия нового окна
+# функция для открытия нового окна
 def Kuzbas():
     new_window = Toplevel(app)
     new_window.title("Координаты городов Кузбасса")
@@ -158,44 +158,43 @@ def Kuzbas():
     Label(new_window, text="Северный полюс(станция 'Восток'): Широта- -78.46442, Долгота-106.83733", font=("Times New Roman", 15)).pack(anchor="nw")
 
 
-# Парсим конфигурационный файл, извлекаем из него ключ API в переменную api_key.
+# парсим конфигурационный файл, извлекаем из него ключ API в переменную api_key
 config_file = "config.ini"
 config = ConfigParser()
 config.read(config_file)
 api_key = config['gfg']['api']
 
-# Задаем URL API
+# задаем URL API
 url = 'https://api.weather.yandex.ru/v2/forecast'
 
-# Создаем базовое окно приложения
+# создаем базовое окно приложения
 app = Tk()
 
-# Добавляем наименование заголовка
+# добавляем наименование заголовка
 app.title("Приложение - запрос погоды")
 
-# Заменяем дефолтную иконку
+# заменяем дефолтную иконку
 app.iconbitmap("Images/unik_32x32.ico")
 
-# Устанавливаем изображение из файла в главном окне.
+# устанавливаем изображение из файла в главном окне.
 background_image = PhotoImage(file="Images/unik.gif")
-# Создаем виджет и публикуем его с указанным изображением
+# создаем виджет и публикуем его с указанным изображением
 background_label = Label(app, image=background_image)
 background_label.pack(fill="both")
 
-# Устанавливаем размер главного окна.
+# устанавливаем размер главного окна.
 app.geometry("550x800+80+200")
 
-# Команда проверки ввода. register(validate_float) - для окна app регистрирует функцию validate_float,
+# команда проверки ввода. register(validate_float) - для окна app регистрирует функцию validate_float,
 # которая проверяет поле ввода на тип данных float. %P представляет новое значение, которое передается в функцию проверки.
-#vinput = (app.register(validate_float), "%P")\
 vinput = (app.register(validate_float), "%P")
 
-# Создаем кнопку для получения координат Кузбасса
+# создаем кнопку для получения координат Кузбасса
 b1 = Button(text='Посмотреть координаты городов Кузбасса', font=('Times New Roman', 15), width=36,
             activebackground='black', background='light green', command=Kuzbas)
 b1.pack(pady=10)
 
-# Добавляем labels, buttons and text, публикуем виджеты.
+# добавляем labels, buttons and text, публикуем виджеты.
 city_lat = StringVar()
 city_entry_lat = Entry(app, textvariable=city_lat, font=('Times New Roman', 12), validate='key', validatecommand=vinput)  # Ввод с проверкой
 #city_entry_lat = Entry(app, textvariable=city_lat, font=('Times New Roman', 12))  # Ввод с проверкой
@@ -206,7 +205,6 @@ h.pack()
 
 city_lon = StringVar()
 city_entry_lon = Entry(app, textvariable=city_lon, font=('Times New Roman', 12), validate='key',validatecommand=vinput)  # Ввод с проверкой
-#city_entry_lon = Entry(app, textvariable=city_lon, font=('Times New Roman', 12))  # Ввод с проверкой
 city_entry_lon.pack()
 
 hc = Label(app, text='(Введите долготу)', font=('Times New Roman', 12), wraplength=500)
@@ -250,5 +248,5 @@ condition_label.pack()
 season_label = Label(app, text="")
 season_label.pack()
 
-# Запускаем окно приложения app
+# запускаем окно приложения app
 app.mainloop()
