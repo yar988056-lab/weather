@@ -197,7 +197,6 @@ b1.pack(pady=10)
 # добавляем labels, buttons and text, публикуем виджеты
 city_lat = StringVar()
 city_entry_lat = Entry(app, textvariable=city_lat, font=('Times New Roman', 12), validate='key', validatecommand=vinput)  # ввод с проверкой
-#city_entry_lat = Entry(app, textvariable=city_lat, font=('Times New Roman', 12))  # ввод с проверкой
 city_entry_lat.pack()
 
 h = Label(app, text='(Введите широту)', font=('Times New Roman', 12), wraplength=500)
