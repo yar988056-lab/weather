@@ -6,15 +6,6 @@ from tkinter import messagebox
 
 
 # Функция проверки поля ввода координат. Разрешен тип float.
-# def validate_float(new_value):
-#     if new_value == "":
-#         return True  # разрешаем пустое поле
-#
-#     try:
-#         float(new_value)
-#         return True
-#     except ValueError:
-#         return False
 def validate_float(new_value):
     # Разрешаем пустой ввод (удаление всех символов)
     if new_value == "":
@@ -93,11 +84,11 @@ def search():
     if weather:
         location_lbl['text'] = 'Расположение - Широта {} , Долгота {}'.format(city_entry_lat.get(),
                                                                               city_entry_lon.get())
-        temperature_label['text'] = 'Температура: ' + str(weather[0]) + ' С'
+        temperature_label['text'] = 'Температура: ' + str(weather[0]) + ' С°'
         if weather[0] < -15:
             temperature_alarm_label[
                 'text'] = 'Внимание!!! Температура ниже критического значения -15 С. В ближайшее время в данной местности необходимо проверить изношенные теплотрассы на предмет аварий.'
-        temperature_feel_label['text'] = 'Температура ощущается как: ' + str(weather[1]) + ' C'
+        temperature_feel_label['text'] = 'Температура ощущается как: ' + str(weather[1]) + ' C°'
         wind_speed_label['text'] = 'Скорость ветра: ' + str(weather[2]) + 'м/с'
         if weather[2] > 15:
             wind_alarm_label[
