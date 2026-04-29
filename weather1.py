@@ -32,9 +32,9 @@ def validate_float(new_value):
 def getweather(params_api):
     # получаем ответ сервиса по запросу
     response = requests.get(url, params=params_api, headers={'X-Yandex-API-Key': api_key})
-    # проверяем статус ответа сервера (200 - ОК, 403 - Forbidden (доступ запрещен), 404 - Page not found)
+    # проверяем статус ответа сервера (200 - ОК, 403 - Forbidden (доступ запрещен), 404 - Page not found, 400 - Bad Request)
     if response.status_code == 200:
-        # преобразуем ответ в JSON-формат
+        # преобразуем ответ в JSON формат
         data = response.json()
 
         # выводим в тесте данные о текущей погоде и заполняем список final полученными значениями погоды из json формата
@@ -65,7 +65,7 @@ def getweather(params_api):
 
         return final
     else:
-        # Выводим код ошибки
+        # выводим код ошибки
         print(f'Ошибка: {response.status_code}')
         return None
 
