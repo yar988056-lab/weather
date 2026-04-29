@@ -1,11 +1,11 @@
-# импортируем нужные модули.
+# импортируем нужные модули
 from configparser import ConfigParser
 import requests
 from tkinter import *
 from tkinter import messagebox
 
 
-# функция проверки поля ввода координат. Разрешен тип float.
+# функция проверки поля ввода координат. Разрешен тип float
 def validate_float(new_value):
     # разрешаем пустой ввод (удаление всех символов)
     if new_value == "":
